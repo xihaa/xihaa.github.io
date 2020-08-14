@@ -4,7 +4,11 @@
 
 <img src="/Users/xii/Library/Application Support/typora-user-images/image-20200812180520023.png" alt="image-20200812180520023" style="zoom:50%;" />
 
+## overview
 
+在vue中并不是所有的对象/数组都是响应式的。还有一些在代码里单纯的对象/数组。
+
+将数据变成响应式的—》经过Observer
 
 ## vue响应式原理/变化监测
 
@@ -16,9 +20,9 @@ Object.defineProperty监测数据变化—>通知组件—>组件内部通过dom
 
 **读取数据触发getter=〉在getter中收集依赖watcher=〉收集在Dep中=》在setter中触发依赖**
 
-<img src="/Users/xii/Library/Application Support/typora-user-images/image-20200813213628775.png" alt="image-20200813213628775" style="zoom:50%;" />
+![image-20200814104556234](/Users/xii/Library/Application Support/typora-user-images/image-20200814104556234.png)
 
-Data通过Observer转换成了 getter/setter的形式来追踪变化。 当外界通过Watcher读取数据时，会触发getter从而将Watcher添加到依赖中。 当数据发生了变化时，会触发setter,从而向Dep中的依赖（Watcher ）发送通知。
+Data通过Observer转换成了 getter/setter的形式来追踪变化。 当外界通过Watcher读取数据时，会触发getter从而将Watcher添加到依赖中。Object.defineProperty的getter中收集依赖到Dep。 当数据发生了变化时，会触发setter,从而向Dep中的依赖（Watcher ）发送通知。
 
 Watcher接收到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新，也有 可能触发用户的某个回调函数等。
 
