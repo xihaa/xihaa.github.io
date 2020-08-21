@@ -49,7 +49,7 @@ Object.defineProperty监测数据变化—>通知组件—>组件内部通过dom
 
 Data通过Observer转换成了 getter/setter的形式来追踪变化。 当外界通过Watcher读取数据时，会触发getter从而将Watcher添加到依赖中。Object.defineProperty的getter中收集依赖到Dep。 当数据发生了变化时，会触发setter,从而向Dep中的依赖（Watcher ）发送通知。
 
-Watcher接收到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新，也有 可能触发用户的某个回调函数等。
+Watcher接收到通知后，触发它们的 `update` 过程，这个过程又利用了队列做了进一步优化，在 `nextTick` 后执行所有 `watcher` 的 `run`，最后执行它们的回调函数。即向外界发送通知，变化通知到外界后可能会触发视图更新，也有 可能触发用户的某个回调函数等。
 
 ```
 //eg:
@@ -132,9 +132,9 @@ Vue.js中通过**模板来描述状态与视图之间的映射关系**，所以�
 
 - 元素节点
 
- ***\*tag：\****顾名思义，tag就是一个节点的名称，例如p、ul、li和div等。
+ **tag：**顾名思义，tag就是一个节点的名称，例如p、ul、li和div等。
 
- ***\*data：\****该属性包含了一些节点上的数据，比如attrs^ class和style等。
+ **data：**该属性包含了一些节点上的数据，比如attrs^ class和style等。
 
 \***children：\***当前节点的子节点列表。
 
