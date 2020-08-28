@@ -1,3 +1,11 @@
+/*
+    实现要点：
+    1.闭包外的声明的初始化 
+    2.返回闭包
+    3.闭包内清除定时器
+    4.重置定时器，event.apply(this,args)执行事件
+*/
+
 function debounce(event, time) {
     let timer = null;
     return function (...args) {
