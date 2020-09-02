@@ -2,6 +2,7 @@
     数组扁平化——将多层嵌套的数组转化成一层
 */
 
+//递归实现
 function flatten(arr){
     let res=[];
     arr.forEach(item => {
@@ -13,6 +14,8 @@ function flatten(arr){
     });
     return res;
 }
+
+//
 
 let arr=[1,[2,3,[4,5]],6];
 console.log(flatten(arr));
