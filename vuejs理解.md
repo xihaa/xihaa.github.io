@@ -90,7 +90,7 @@ Array通过方法去改变内容，Array在getter中收集依赖，在拦截器�
 
 因为侦测Array变化是通过拦截原型的方式实现的，所以有些变化vue监测不到。
 
-- 修改数组的第一个值
+- 修改数组的一个值
 
   ```
   this.list[0]=3;
@@ -101,6 +101,39 @@ Array通过方法去改变内容，Array在getter中收集依赖，在拦截器�
   ```
   this.length=0;
   ```
+
+> 为了解决以上问题 **vue的解决方案**
+>
+> 1.Vue.set (object, propertyName, value) **/** vm.$set (object, propertyName, value)
+>
+> ⚠️ 这里Vue.set源码里对数组变成响应式的实现也用了`2`中的splice方法
+>
+> ```
+> export function set (target: Array<any> | Object, key: any, val: any): any {
+>   // target 为数组  
+>   if (Array.isArray(target) && isValidArrayIndex(key)) {
+>     // 修改数组的长度, 避免索引>数组长度导致splcie()执行有误
+>     target.length = Math.max(target.length, key)
+>     // 利用数组的splice变异方法触发响应式  
+>     target.splice(key, 1, val)
+>     return val
+>   }
+>   ...
+>   ...
+>   }	
+> ```
+>
+> 2.vue的变异方法
+>
+> ```
+> 'push',
+>  'pop',
+>  'shift',
+>  'unshift',
+>  'splice',
+>  'sort',
+>  'reverse'
+> ```
 
 ## 虚拟dom
 
