@@ -33,7 +33,7 @@ test(2);
 
 ## this补充
 
-<img src="/Users/xii/Library/Application Support/typora-user-images/image-20200730171802728.png" alt="image-20200730171802728" style="zoom:50%;" />
+<img src="../images/this补充.png" alt="image-20200730171802728" style="zoom:50%;" />
 
 首先要明白call/apply是用来实现继承的！就是不用重写而且去“偷来别人的技能”
 

@@ -177,13 +177,39 @@ const receiveMessage = e => {
 };
 ```
 
+### iframe特性
 
+iframe的特性都是依赖参数配置实现的，现整理如下有用的属性：
+
+| 属性                | 解释                                                         | 备注 |
+| ------------------- | ------------------------------------------------------------ | ---- |
+| allow               | 可以为iframe指定[特性策略](https://developer.mozilla.org/en-US/docs/Web/HTTP/Feature_Policy) |      |
+| allowfullscreen     | 是否允许iframe调用requestFullscreen()方法激活全屏模式，这个属性等同于allow属性的这个配置：`allow="fullscreen"` |      |
+| allowpaymentrequest | 是否允许一个跨域的iframe调用[支付请求API](https://developer.mozilla.org/en-US/docs/Web/API/Payment_Request_API) |      |
+| csp                 | 内嵌的资源强制实行同源策略                                   |      |
+| height              | iframe的高度，默认150px                                      |      |
+| importance          | 标识在iframe属性src指示的资源的下载优先级，有`auto`/`high`/`low`三个等级 |      |
+| name                | 内嵌的浏览内容的目标名称                                     |      |
+| referrerpolicy      | 指示当获取frame的资源的时候携带的referrer，默认是`no-referrer-when-downgrade`，也就是仅当发生协议降级（如 HTTPS 页面引入 HTTP 资源，从 HTTPS 页面跳到 HTTP 等）时不发送 Referrer 信息。这个规则是现在大部分浏览器默认所采用的； |      |
+| sandbox             | 在frame上的内容上运用额外的一下限制，具体哪些字段我们下面详细解释 |      |
 
 ## iframe安全性
 
+[IFrame安全问题解决办法（跨框架脚本(XFS)漏洞](https://blog.csdn.net/u011121146/article/details/52872143?utm_medium=distribute.pc_relevant_bbs_down.none-task-blog-baidujs-1.nonecase&depth_1-utm_source=distribute.pc_relevant_bbs_down.none-task-blog-baidujs-1.nonecase)
 
+跨框架脚本(XFS)漏洞使攻击者能够在恶意页面的 HTMLiframe 标记内加载易受攻击的应用程序。此漏洞设计点击劫持攻击，以实施钓鱼式攻击、框架探查攻击、社会工程攻击或跨站点请求伪造攻击。其他网站会在他的iframe中调用我的网站内容，来截取他人的点击事件或者窃取他人敏感信息。
 
-### 
+#### 修复方法
+
+浏览器供应商已使用 X-Frame-Options标头引入并采用基于策略的缓解技术。如果站点包含在 iframe内，则开发人员可以使用此标头指示浏览器执行相应操作。开发人员必须将X-Frame-Options标头设置为以下允许的值之一:
+
+​    · DENY拒绝设置页面框架的所有尝试
+
+​    · SAMEORIGIN仅当另一页面与设置框架的页面属于同一源时，该另一页面才能充当此页面的框架
+
+​    · ALLOW-FROM源开发人员可以在源属性中指定受信源列表。只有源中的页面才允许在 iframe内部加载此页面
+
+​    开发人员还必须使用客户端 frame busting JavaScript作为对 XFS的保护。这样也将保护不支持X-Frame-Options标头的旧版本浏览器用户免受点击劫持攻击。
 
 ## iframe使用场景
 
